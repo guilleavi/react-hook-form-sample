@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
   Registers the element into the hook to be able to validate it and submit it.
 */
 
-interface FormInput {
+interface FormData {
   firstName: string;
   lastName: string;
   age: number;
@@ -17,7 +17,7 @@ const FormSample = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormInput>({
+  } = useForm<FormData>({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -28,7 +28,7 @@ const FormSample = () => {
   const lastName = watch("lastName");
   const age = watch("age");
 
-  const onSubmitCb: SubmitHandler<FormInput> = (data) => {
+  const onSubmitCb: SubmitHandler<FormData> = (data) => {
     console.log(data);
   };
 
@@ -39,6 +39,7 @@ const FormSample = () => {
           {...register("firstName", {
             required: "This is required",
           })}
+          aria-invalid={errors.firstName ? "true" : "false"}
           placeholder="First Name"
         />
         <p>{firstName}</p>
@@ -56,6 +57,7 @@ const FormSample = () => {
               message: "Incorrect pattern",
             },
           })}
+          aria-invalid={errors.lastName ? "true" : "false"}
           placeholder="Last Name"
         />
         <p>{lastName}</p>
@@ -67,6 +69,7 @@ const FormSample = () => {
             min: 18,
             max: 99,
           })}
+          aria-invalid={errors.age ? "true" : "false"}
           placeholder="Age"
         />
         <p>{age}</p>
